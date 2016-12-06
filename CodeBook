@@ -20,34 +20,6 @@ colnames(y_train) <-"activityId"
 colnames(subject_train) <- "subjectId"
 colnames(x_test) <- features[,2] 
 colnames(y_test) <- "activityId"
-colnames(subject_test) <- "subjectId"
-colnames(activityLabels) <- c('activityId','activityType')
-
-#1.3 Merge all data into a single set
-train <- cbind(y_train, subject_train, x_train)
-test <- cbind(y_test, subject_test, x_test)
-merged <- rbind(train, test)
-
-#2. Extract only the measurements on the mean and standard deviation for each measurement
-#2.1 Read column names
-colNames <- colnames(merged)
-
-#2.2 Create vector for defining ID, mean and standard deviation
-id_mean_and_std <- (grepl("activityId" , colNames) | 
-                     grepl("subjectId" , colNames) | 
-                     grepl("mean.." , colNames) | 
-                     grepl("std.." , colNames) 
-)
-
-
-#2.3 Create subset of data with ID, mean and standard deviation
-subset <- merged[ , id_mean_and_std == TRUE]
-
-#3. Use descriptive activity names to name the activities in the data set
-labeledDataSet <- merge(subset, activityLabels, by='activityId', all.x=TRUE)
-
-#4. Appropriately labels the data set with descriptive variable names
-
 Description of the DATA
 
 Obtained from the data file and from site where data was obtained:

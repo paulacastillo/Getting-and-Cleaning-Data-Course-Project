@@ -48,33 +48,6 @@ labeledDataSet <- merge(subset, activityLabels, by='activityId', all.x=TRUE)
 
 #4. Appropriately labels the data set with descriptive variable names
 
-#4a. Clean names
-
-cnames<-names(labeledDataSet)
-cnames<-gsub(pattern = "-", replacement = "_", x= cnames)
-cnames<-gsub(pattern = "\\(", replacement = "", x= cnames)
-cnames<-gsub(pattern = "\\)", replacement = "", x= cnames)
-
-colnames(labeledDataSet)<-cnames
-
-#4b. Assigned cleaned names to subset
-labeledDataSet<- select(labeledDataSet, subjectId, activityId, activityType, tBodyAcc_mean_X:fBodyBodyGyroJerkMag_meanFreq)
-
-
-#5. Create a second, independent tidy data set with the average of each variable for each activity and each subject
-
-#3.1 Make second tidy data set
-TidyData <- aggregate(. ~subjectId + activityId, labeledDataSet[,-3], mean)
-TidyData <- merge(TidyData, activityLabels, by='activityId', all.x=TRUE)
-TidyData<- select(TidyData, subjectId, activityType, tBodyAcc_mean_X:fBodyBodyGyroJerkMag_meanFreq)
-TidyData <- TidyData[order(TidyData$subjectId, TidyData$activityType),]
-
-#5.a. Write to csv file
-
-write.csv(TidyData, "TidyDataSet.csv", row.names=FALSE)
-
-
-
 Description of the DATA
 
 Obtained from the data file and from site where data was obtained:
